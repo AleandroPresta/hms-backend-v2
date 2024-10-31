@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.hms.booking.BookingEntity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -25,7 +26,7 @@ import lombok.Setter;
 @Entity
 public class RoomEntity {
 
-    public enum roomType {
+    public enum RoomType {
         SUITE,
         DELUXE_ROOM,
         STANDARD_ROOM,
@@ -41,7 +42,7 @@ public class RoomEntity {
     private String roomName;
 
     @Column(name = "room_type")
-    private roomType roomType;
+    private RoomType roomType;
     
     @Column(name = "room_capacity")
     private int roomCapacity;
@@ -62,7 +63,7 @@ public class RoomEntity {
     @Column(name = "room_features")
     private List<String> roomFeatures;
 
-    @OneToMany(mappedBy = "room")
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BookingEntity> bookings;
 
     @Column(name = "room_price")
