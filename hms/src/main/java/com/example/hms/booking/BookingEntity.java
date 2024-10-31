@@ -7,7 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
-import java.sql.Date;
+import java.util.Date;
 
 import com.example.hms.room.RoomEntity;
 
