@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -50,24 +52,14 @@ public class RoomController {
         return ResponseEntity.ok(room);
     }
 
+    @DeleteMapping("{id}/delete")
+    public ResponseEntity<Optional<RoomEntity>> deleteRoom(@PathVariable Long id) {
+        roomRepository.deleteById(id);
+        return ResponseEntity.ok(null);
+    }
+
     public RoomEntity createMockRoom() {
         RoomEntity room = new RoomEntity();
-
-        room.setRoomName("Andromeda Suite");
-        room.setRoomType(RoomType.SUITE);
-        room.setRoomCapacity(4);
-        room.setRoomLocation("Galaxy Wing");
-        room.setRoomImages(Arrays.asList(
-            "https://picsum.photos/seed/andromeda1/800/600",
-            "https://picsum.photos/seed/andromeda2/800/600",
-            "https://picsum.photos/seed/andromeda3/800/600",
-            "https://picsum.photos/seed/andromeda4/800/600",
-            "https://picsum.photos/seed/andromeda5/800/600"
-        ));
-        room.setRoomSize(100);
-        room.setRoomFeatures(Arrays.asList("King Bed", "Galaxy View", "Mini Bar"));
-        room.setRoomPrice(200.0);
-        room.setRoomRating(4.3);
 
         // Today
         Date startDate = new Date();
