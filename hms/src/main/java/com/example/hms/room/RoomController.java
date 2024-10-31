@@ -67,7 +67,7 @@ public class RoomController {
         Date endDate = new Date(startDate.getTime() + (1000 * 60 * 60 * 24));
 
         BookingEntity booking = new BookingEntity();
-        booking.setRoom(room);
+        // booking.setRoom(room); TODO understand if this is the problem for multiple creation
         booking.setStartDate(startDate);
         booking.setEndDate(endDate);
 
