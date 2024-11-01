@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,25 +34,22 @@ public class RoomController {
         return "Welcome to HMS's room section";
     }
 
-    /*@GetMapping("mockadd")
-    public String addRoom() {
-        RoomEntity room = createMockRoom();
-        
-        roomRepository.save(room);
-
-        return "Added room with id: " + room.getId();
-    }*/
-
-    /*@GetMapping("all")
-    public ResponseEntity<Iterable<RoomEntity>> getAllRooms() {
-        Iterable<RoomEntity> rooms = roomRepository.findAll();
+    @GetMapping("all")
+    public ResponseEntity<Iterable<RoomDto>> getAllRooms() {
+        Iterable<RoomDto> rooms = roomService.getAllRooms();
         return ResponseEntity.ok(rooms);
-    }*/
+    }
 
     @GetMapping("{id}")
     public ResponseEntity<RoomDto> getRoomById(@PathVariable Long id) {
         RoomDto roomDto = roomService.getRoomById(id);
         return new ResponseEntity<>(roomDto, HttpStatus.OK);
+    }
+
+    @PostMapping("create")
+    public ResponseEntity<RoomDto> createRoom(@RequestBody RoomDto roomDto) {
+        RoomDto savedRoom = roomService.createRoom(roomDto);
+        return new ResponseEntity<>(savedRoom, HttpStatus.CREATED);
     }
 
     /*@DeleteMapping("{id}/delete")
