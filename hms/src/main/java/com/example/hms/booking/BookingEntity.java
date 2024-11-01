@@ -2,6 +2,7 @@ package com.example.hms.booking;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,6 +18,7 @@ import lombok.ToString;
 import java.util.Date;
 
 import com.example.hms.room.RoomEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @AllArgsConstructor
@@ -30,8 +32,9 @@ public class BookingEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "room_id", nullable = false)
+    @JsonBackReference
     private RoomEntity room;
 
     @Column(name = "start_date")

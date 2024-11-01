@@ -30,7 +30,4 @@ public class RoomDto {
     private Double roomPrice;
     private Double roomRating;
     
-
-    // TODO complete with the other fields
-    
 }
