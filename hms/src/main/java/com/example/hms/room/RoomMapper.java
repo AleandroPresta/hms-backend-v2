@@ -6,6 +6,7 @@ public class RoomMapper {
         return RoomDto.builder()
                 .id(room.getId())
                 .roomName(room.getRoomName())
+                .roomType(room.getRoomType())
                 .build();
     }
     
