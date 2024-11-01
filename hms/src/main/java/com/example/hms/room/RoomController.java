@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hms.booking.BookingEntity;
 import com.example.hms.room.RoomEntity.RoomType;
-import com.example.hms.test.TestRepository;
 
 import lombok.AllArgsConstructor;
 
@@ -26,40 +25,39 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/api/v1/rooms")
 public class RoomController {
 
-    @Autowired
-    private RoomRepository roomRepository;
+    private RoomService roomService;
 
     @GetMapping("welcome")
     public String welcome() {
         return "Welcome to HMS's room section";
     }
 
-    @GetMapping("mockadd")
+    /*@GetMapping("mockadd")
     public String addRoom() {
         RoomEntity room = createMockRoom();
         
         roomRepository.save(room);
 
         return "Added room with id: " + room.getId();
-    }
+    }*/
 
-    @GetMapping("all")
+    /*@GetMapping("all")
     public ResponseEntity<Iterable<RoomEntity>> getAllRooms() {
         Iterable<RoomEntity> rooms = roomRepository.findAll();
         return ResponseEntity.ok(rooms);
-    }
+    }*/
 
     @GetMapping("{id}")
-    public ResponseEntity<Optional<RoomEntity>> getRoomById(@PathVariable Long id) {
-        Optional<RoomEntity> room = roomRepository.findById(id);
-        return new ResponseEntity<>(room, HttpStatus.OK);
+    public ResponseEntity<RoomDto> getRoomById(@PathVariable Long id) {
+        RoomDto roomDto = roomService.getRoomById(id);
+        return new ResponseEntity<>(roomDto, HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}/delete")
+    /*@DeleteMapping("{id}/delete")
     public ResponseEntity<Optional<RoomEntity>> deleteRoom(@PathVariable Long id) {
         roomRepository.deleteById(id);
         return ResponseEntity.ok(null);
-    }
+    }*/
 
     public RoomEntity createMockRoom() {
         RoomEntity room = RoomEntity.builder()
