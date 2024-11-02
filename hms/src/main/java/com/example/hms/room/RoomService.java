@@ -46,5 +46,26 @@ public class RoomService {
     
         return RoomMapper.toDto(deletedRoom);
     }
+
+    public RoomDto updateRoom(Long id, RoomDto roomDto) {
+        RoomEntity updatedRoom = roomRepository
+            .findById(id)
+            .orElseThrow(
+                () -> new RuntimeException("Room not found")
+            );
+
+        updatedRoom.setRoomName(roomDto.getRoomName());
+        updatedRoom.setRoomType(roomDto.getRoomType());
+        updatedRoom.setRoomCapacity(roomDto.getRoomCapacity());
+        updatedRoom.setRoomLocation(roomDto.getRoomLocation());
+        updatedRoom.setRoomImages(roomDto.getRoomImages());
+        updatedRoom.setRoomSize(roomDto.getRoomSize());
+        updatedRoom.setRoomFeatures(roomDto.getRoomFeatures());
+        // To avoid discrepancies we don't update bookings
+        updatedRoom.setRoomPrice(roomDto.getRoomPrice());
+        updatedRoom.setRoomRating(roomDto.getRoomRating());
+
+        return RoomMapper.toDto(updatedRoom);
+    }
     
 }
