@@ -52,11 +52,11 @@ public class RoomController {
         return new ResponseEntity<>(savedRoom, HttpStatus.CREATED);
     }
 
-    /*@DeleteMapping("{id}/delete")
-    public ResponseEntity<Optional<RoomEntity>> deleteRoom(@PathVariable Long id) {
-        roomRepository.deleteById(id);
-        return ResponseEntity.ok(null);
-    }*/
+    @DeleteMapping("{id}/delete")
+    public ResponseEntity<RoomDto> deleteRoom(@PathVariable Long id) {
+        RoomDto deletedRoom = roomService.deleteRoom(id);
+        return ResponseEntity.ok(deletedRoom);
+    }
 
     public RoomEntity createMockRoom() {
         RoomEntity room = RoomEntity.builder()

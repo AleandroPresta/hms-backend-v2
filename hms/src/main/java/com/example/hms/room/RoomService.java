@@ -11,7 +11,11 @@ public class RoomService {
     private RoomRepository roomRepository;
 
     public RoomDto getRoomById(Long id) {
-        RoomEntity room = roomRepository.findById(id).orElseThrow(() -> new RuntimeException("Room not found"));
+        RoomEntity room = roomRepository
+            .findById(id)
+            .orElseThrow(
+                () -> new RuntimeException("Room not found")
+                );
         return RoomMapper.toDto(room);
     }
 
@@ -24,6 +28,18 @@ public class RoomService {
         RoomEntity room = RoomMapper.toEntity(roomDto);
         RoomEntity savedRoom = roomRepository.save(room);
         return RoomMapper.toDto(savedRoom);
+    }
+
+    public RoomDto deleteRoom(Long id) {
+        RoomEntity deletedRoom = roomRepository
+            .findById(id)
+            .orElseThrow(
+                () -> new RuntimeException("Room not found")
+                );
+
+        roomRepository.deleteById(id);
+
+        return RoomMapper.toDto(deletedRoom);
     }
     
 }
