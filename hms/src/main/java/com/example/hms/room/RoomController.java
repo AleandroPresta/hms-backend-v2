@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.hms.booking.BookingEntity;
-import com.example.hms.room.RoomEntity.RoomType;
 
 import lombok.AllArgsConstructor;
 
@@ -54,38 +52,6 @@ public class RoomController {
     public ResponseEntity<RoomDto> deleteRoom(@PathVariable Long id) {
         RoomDto deletedRoom = roomService.deleteRoom(id);
         return ResponseEntity.ok(deletedRoom);
-    }
-
-    public RoomEntity createMockRoom() {
-        RoomEntity room = RoomEntity.builder()
-                .roomName("Room 101")
-                .roomType(RoomType.DELUXE_ROOM)
-                .roomCapacity(2)
-                .roomLocation("1st floor")
-                .roomImages(Arrays.asList("image1.jpg", "image2.jpg"))
-                .roomSize(5)
-                .roomFeatures(Arrays.asList("TV", "AC", "Mini Fridge"))
-                .roomPrice(100.0)
-                .roomRating(4.5)
-                .build();
-
-        // Today
-        Date startDate = new Date();
-        // Tomorrow
-        Date endDate = new Date(startDate.getTime() + (1000 * 60 * 60 * 24));
-
-        BookingEntity booking = BookingEntity.builder()
-            .startDate(startDate)
-            .endDate(endDate)
-            .room(room)
-            .build();
-
-        List<BookingEntity> bookings = new ArrayList<>();
-        bookings.add(booking);
-
-        room.setBookings(bookings);
-
-        return room;
     }
     
 }
