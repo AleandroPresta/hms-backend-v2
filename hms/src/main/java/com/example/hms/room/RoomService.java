@@ -35,10 +35,15 @@ public class RoomService {
             .findById(id)
             .orElseThrow(
                 () -> new RuntimeException("Room not found")
-                );
+            );
 
+        // Fetch collections to avoid lazy initialization exception
+        deletedRoom.getBookings().size();
+        deletedRoom.getRoomFeatures().size();
+        deletedRoom.getRoomImages().size();
+    
         roomRepository.deleteById(id);
-
+    
         return RoomMapper.toDto(deletedRoom);
     }
     
