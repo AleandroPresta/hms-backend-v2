@@ -48,22 +48,24 @@ public class RoomService {
     }
 
     public RoomDto updateRoom(Long id, RoomDto roomDto) {
-        RoomEntity updatedRoom = roomRepository
+        RoomEntity room = roomRepository
             .findById(id)
             .orElseThrow(
                 () -> new RuntimeException("Room not found")
             );
 
-        updatedRoom.setRoomName(roomDto.getRoomName());
-        updatedRoom.setRoomType(roomDto.getRoomType());
-        updatedRoom.setRoomCapacity(roomDto.getRoomCapacity());
-        updatedRoom.setRoomLocation(roomDto.getRoomLocation());
-        updatedRoom.setRoomImages(roomDto.getRoomImages());
-        updatedRoom.setRoomSize(roomDto.getRoomSize());
-        updatedRoom.setRoomFeatures(roomDto.getRoomFeatures());
+        room.setRoomName(roomDto.getRoomName());
+        room.setRoomType(roomDto.getRoomType());
+        room.setRoomCapacity(roomDto.getRoomCapacity());
+        room.setRoomLocation(roomDto.getRoomLocation());
+        room.setRoomImages(roomDto.getRoomImages());
+        room.setRoomSize(roomDto.getRoomSize());
+        room.setRoomFeatures(roomDto.getRoomFeatures());
         // To avoid discrepancies we don't update bookings
-        updatedRoom.setRoomPrice(roomDto.getRoomPrice());
-        updatedRoom.setRoomRating(roomDto.getRoomRating());
+        room.setRoomPrice(roomDto.getRoomPrice());
+        room.setRoomRating(roomDto.getRoomRating());
+
+        RoomEntity updatedRoom = roomRepository.save(room);
 
         return RoomMapper.toDto(updatedRoom);
     }
