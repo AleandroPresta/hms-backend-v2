@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @AllArgsConstructor
@@ -52,6 +54,12 @@ public class RoomController {
     public ResponseEntity<RoomDto> deleteRoom(@PathVariable Long id) {
         RoomDto deletedRoom = roomService.deleteRoom(id);
         return ResponseEntity.ok(deletedRoom);
+    }
+
+    @PutMapping("{id}/update")
+    public ResponseEntity<RoomDto> updateRoom(@PathVariable Long id, @RequestBody RoomDto roomDto) {
+        RoomDto updatedRoom = roomService.updateRoom(id, roomDto);
+        return ResponseEntity.ok(updatedRoom);
     }
     
 }
