@@ -1,12 +1,5 @@
 package com.example.hms.room;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.hms.booking.BookingEntity;
-import com.example.hms.room.RoomEntity.RoomType;
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @AllArgsConstructor
@@ -52,42 +45,16 @@ public class RoomController {
         return new ResponseEntity<>(savedRoom, HttpStatus.CREATED);
     }
 
-    /*@DeleteMapping("{id}/delete")
-    public ResponseEntity<Optional<RoomEntity>> deleteRoom(@PathVariable Long id) {
-        roomRepository.deleteById(id);
-        return ResponseEntity.ok(null);
-    }*/
+    @DeleteMapping("{id}/delete")
+    public ResponseEntity<RoomDto> deleteRoom(@PathVariable Long id) {
+        RoomDto deletedRoom = roomService.deleteRoom(id);
+        return ResponseEntity.ok(deletedRoom);
+    }
 
-    public RoomEntity createMockRoom() {
-        RoomEntity room = RoomEntity.builder()
-                .roomName("Room 101")
-                .roomType(RoomType.DELUXE_ROOM)
-                .roomCapacity(2)
-                .roomLocation("1st floor")
-                .roomImages(Arrays.asList("image1.jpg", "image2.jpg"))
-                .roomSize(5)
-                .roomFeatures(Arrays.asList("TV", "AC", "Mini Fridge"))
-                .roomPrice(100.0)
-                .roomRating(4.5)
-                .build();
-
-        // Today
-        Date startDate = new Date();
-        // Tomorrow
-        Date endDate = new Date(startDate.getTime() + (1000 * 60 * 60 * 24));
-
-        BookingEntity booking = BookingEntity.builder()
-            .startDate(startDate)
-            .endDate(endDate)
-            .room(room)
-            .build();
-
-        List<BookingEntity> bookings = new ArrayList<>();
-        bookings.add(booking);
-
-        room.setBookings(bookings);
-
-        return room;
+    @PutMapping("{id}/update")
+    public ResponseEntity<RoomDto> updateRoom(@PathVariable Long id, @RequestBody RoomDto roomDto) {
+        RoomDto updatedRoom = roomService.updateRoom(id, roomDto);
+        return ResponseEntity.ok(updatedRoom);
     }
     
 }
