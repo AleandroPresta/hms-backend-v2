@@ -49,9 +49,11 @@ public class RoomFilterRepository {
 
         /*if (sortBy != null) {
             cq.orderBy(cb.asc(root.get(sortBy)));
-        }
+        } */
 
-        if (pageNo != null && pageSize != null) {
+        cq.where(predicates.toArray(new Predicate[0]));
+
+        /* if (pageNo != null && pageSize != null) {
             int offset = (pageNo - 1) * pageSize;
             return em.createQuery(cq).setFirstResult(offset).setMaxResults(pageSize).getResultList();
         }*/
@@ -64,7 +66,7 @@ public class RoomFilterRepository {
     }
 
     private Predicate predicateByRoomName(CriteriaBuilder cb, Root<RoomEntity> root, String roomName) {
-        return cb.like(root.get("room_name"), "%" + roomName + "%");
+        return cb.like(root.get("roomName"), "%" + roomName + "%");
     }
 
 }
