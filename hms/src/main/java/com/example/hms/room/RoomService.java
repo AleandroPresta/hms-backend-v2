@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 public class RoomService {
 
     private RoomRepository roomRepository;
+    private RoomFilterRepository roomFilterRepository;
 
     public RoomDto getRoomById(Long id) {
         RoomEntity room = roomRepository
@@ -68,6 +69,12 @@ public class RoomService {
         RoomEntity updatedRoom = roomRepository.save(room);
 
         return RoomMapper.toDto(updatedRoom);
+    }
+
+    public Iterable<RoomDto> findAllByQuery(
+        String roomName
+    ) {
+        return RoomMapper.toDtos(roomFilterRepository.findAllByQuery(roomName));
     }
     
 }

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -55,6 +56,15 @@ public class RoomController {
     public ResponseEntity<RoomDto> updateRoom(@PathVariable Long id, @RequestBody RoomDto roomDto) {
         RoomDto updatedRoom = roomService.updateRoom(id, roomDto);
         return ResponseEntity.ok(updatedRoom);
+    }
+
+    @GetMapping("all/filter")
+    public ResponseEntity<Iterable<RoomDto>> filterRooms(
+        @RequestParam(required = false) String roomName
+    ) {
+        Iterable<RoomDto> rooms = roomService.findAllByQuery(roomName);
+
+        return ResponseEntity.ok(rooms);
     }
     
 }
